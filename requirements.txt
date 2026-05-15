@@ -1,0 +1,5 @@
+ccxt
+polars
+pyarrow
+pyyaml
+rich
