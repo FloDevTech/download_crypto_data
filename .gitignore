@@ -1,2 +1,13 @@
-# Local Pi runtime state
+# Local runtime data
+data/
+test_data/
 .atl/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+venv/
+
+# Node dependencies used by local tooling
+node_modules/

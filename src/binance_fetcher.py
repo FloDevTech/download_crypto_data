@@ -116,31 +116,32 @@ class BinanceParquetFetcher:
                         symbol, timeframe, since=current_ts, limit=1000
                     )
                     if ohlcv:
+                        rows_in_range = [
+                            row for row in ohlcv if current_ts <= row[0] < chunk_end
+                        ]
+
                         # Crear DataFrame de Polars
-                        df = pl.DataFrame(
-                            ohlcv,
-                            schema=[
-                                "timestamp",
-                                "open",
-                                "high",
-                                "low",
-                                "close",
-                                "volume",
-                            ],
-                            orient="row",
-                        )
-                        # Convertir timestamp a datetime
-                        df = df.with_columns(pl.from_epoch("timestamp", time_unit="ms"))
-
-                        # Filtrar fuera del rango del chunk
-                        df = df.filter(
-                            pl.col("timestamp") < pl.lit(chunk_end).cast(pl.Datetime)
-                        )
-
-                        if not df.is_empty():
+                        if rows_in_range:
+                            df = pl.DataFrame(
+                                rows_in_range,
+                                schema=[
+                                    "timestamp",
+                                    "open",
+                                    "high",
+                                    "low",
+                                    "close",
+                                    "volume",
+                                ],
+                                orient="row",
+                            )
+                            df = df.with_columns(
+                                pl.from_epoch("timestamp", time_unit="ms")
+                            )
                             self._save_incremental(df, symbol)
 
-                        current_ts = ohlcv[-1][0] + 1
+                            current_ts = rows_in_range[-1][0] + 1
+                        else:
+                            current_ts = chunk_end
                     else:
                         current_ts = chunk_end
 

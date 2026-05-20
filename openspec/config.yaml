@@ -1,0 +1,55 @@
+strict_tdd: true
+context: |
+  pi_test is a Node.js/TypeScript, Python project.
+  Detected markers: .opencode/package.json, .opencode/npm package manager, requirements.txt.
+  Package managers: npm.
+  Additional evidence: Test-like files detected (11); examples: venv\Lib\site-packages\colorama\tests\ansi_test.py, venv\Lib\site-packages\colorama\tests\ansitowin32_test.py, venv\Lib\site-packages\colorama\tests\initialise_test.py, venv\Lib\site-packages\colorama\tests\isatty_test.py, venv\Lib\site-packages\colorama\tests\winterm_test.py.
+  Primary test command: pytest.
+  Unit tests: pytest (pytest).
+  Integration tests: none.
+  E2E tests: none.
+rules:
+  proposal:
+    require_problem_statement: true
+  spec:
+    require_acceptance_criteria: true
+  design:
+    require_tradeoffs: true
+  tasks:
+    protect_review_workload: true
+  apply:
+    test_command: "pytest"
+  verify:
+    test_command: "pytest"
+testing:
+  detected: "2026-05-19"
+  runner:
+    command: "pytest"
+    framework: "pytest"
+  layers:
+    unit: "pytest"
+    integration: ""
+    e2e: ""
+  commands:
+    unit:
+      - scope: "."
+        command: "pytest"
+        framework: "pytest"
+    integration:
+      []
+    e2e:
+      []
+  coverage:
+    command: ""
+    commands:
+      []
+quality:
+  lint: ""
+  lint_commands:
+    []
+  typecheck: ""
+  typecheck_commands:
+    []
+  format: ""
+  format_commands:
+    []

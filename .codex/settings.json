@@ -1,0 +1,15 @@
+{
+  "$schema_comment": "Configuracion operativa para Codex en Windows/PowerShell. La verificacion canonica del repo es .\\init.ps1.",
+  "verification": {
+    "startup": ".\\init.ps1",
+    "before_close": ".\\init.ps1",
+    "tests": "python -m unittest discover -s tests -v"
+  },
+  "permissions": {
+    "allow": [
+      ".\\init.ps1",
+      "python -m unittest discover -s tests -v",
+      "python -m src.cli"
+    ]
+  }
+}
